@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SadConsole.Input;
 using Console = SadConsole.Console;
+using System.Threading.Tasks;
 
 namespace StarterProject
 {
@@ -16,7 +17,7 @@ namespace StarterProject
         {
             //SadConsole.Settings.UnlimitedFPS = true;
             //SadConsole.Settings.UseHardwareFullScreen = true;
-            //SadConsole.Settings.UseDefaultExtendedFont = true;
+            SadConsole.Settings.UseDefaultExtendedFont = true;
 
             // Setup the engine and creat the main window.
             SadConsole.Game.Create(80, 25);
@@ -64,6 +65,7 @@ namespace StarterProject
                 }
                 else if (SadConsole.Global.KeyboardState.IsKeyReleased(Microsoft.Xna.Framework.Input.Keys.F3))
                 {
+                    SadConsole.Debug.CurrentScreen.Show();
                 }
                 else if (SadConsole.Global.KeyboardState.IsKeyReleased(Microsoft.Xna.Framework.Input.Keys.F5))
                 {
@@ -92,10 +94,15 @@ namespace StarterProject
 
             // We'll instead use our demo consoles that show various features of SadConsole.
             Global.CurrentScreen = MainConsole;
-            
+
+            //var con = new Console(10, 10);
+            //con.Print("[c:b]test");
+            //Global.CurrentScreen = con;
+
             // Initialize the windows
             _characterWindow = new Windows.CharacterViewer();
-
         }
+
+        
     }
 }

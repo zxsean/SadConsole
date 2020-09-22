@@ -1,3 +1,46 @@
+## 08/14/2020 V8.99.3
+
+- Added `Settings.FullScreenPreventScaleChangeForNone` to keep `ToggleFullScreen` in `None` resize mode. (thanks ASCII Guy)
+- Added `ParseCommandClearEffect` with string parser command `ceffect` or `ce`. (thanks regulark)
+- Updated templates.
+- Update to MonoGame 3.8.
+
+## 07/13/2020 V8.99.2
+
+- Added DrawImageComponent.
+- Added templates.
+- Fix bug where creating an entity and specifying the font didn't actually set it. (thanks thateye)
+- `AnimatedConsole` defaults to `UseMouse = false` (thanks freiling)
+
+## 04/11/2020 V8.99.1
+
+- Ported controls console tab logic from v9. Fixed logic bug when tabbing controls would tab to controls with `control.TabStop = false`.
+- Fixed bug with changing the cursor render cell affecting the special effect on the cell. (thanks axoeu)
+- Exposed the Theme Library Init method as ApplyDefaults.
+- The embedded fonts always load to `Global.FontEmbedded` and `Global.FontEmbeddedExtended`. This way you can provide a new default and also use the embedded versions when you want.
+- The theme colors object has some static methods to create either the default theme or a theme based on classic EGA ANSI colors.
+- ControlsConsole and Window have a `Invalidated` event that can be used for drawing after the theme as refreshed the console.
+- DrawingSurface always calls OnDraw each frame now.
+
+## 11/26/2019 V8.99.0
+
+- **Breaking changes to themes and controls**
+
+  The control themes system is now a lot simpler.
+
+  - Themes only come from two places, the control directly or from the library.
+  - Each control has a `ThemeColors` property that controls the colors of the theme. If set to `null` the colors are pulled from the parent console/window.
+  - The Console/Window types have a `ThemeColors` property that specify the colors for all controls. If set to `null` the colors are instead pulled from the library.
+  - The library has been simplified. Each control type is registered with a theme via the `Library.SetControlTheme`. To overwrite a default theme, set it in the library.
+
+  When you create a new a control, and thus have a new theme, register it with the library `SadConsole.Themes.Library.Default.SetControlTheme(typeof(yourControl), new ThemeType());` When a control is created it queries the library for a theme, which is a clone of the one registered with the library. If you want to override the library-supplied theme, just set the `Control.Theme` property.
+
+  Setting colors for a console or a control is easy. Each control and `ControlsConsole` or `Window` has a `ThemeColors` property. Set this to override the default colors. Setting this at the console level will feed down to all controls. Setting this on a control only affects the control.
+
+I know I'm not supposed to add breaking changes without increasing the major version. However, V9 is already labeled and I wasn't planning on this change. This change was actually created for V9 as a way to solve the problems with v8's theme system. But it proved so simple to implement that I wanted to port it.
+
+Because of the breaking change, I'm setting this version to a strange one, *v8.99*.
+
 ## 11/04/2019 V8.9.1
 
 - Fix `FontMaster.Rows` calculation (Thanks Kaev)
